@@ -1,0 +1,4 @@
+node_modules/
+.env
+db/local-dev.db
+db/local-dev.db-*

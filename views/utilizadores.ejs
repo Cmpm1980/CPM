@@ -1,0 +1,43 @@
+<%- include('partials/header', { titulo: 'Utilizadores' }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1>Utilizadores</h1>
+  <% if (erro) { %><p class="erro"><%= erro %></p><% } %>
+
+  <table class="tabela">
+    <thead><tr><th>Nome</th><th>Role</th><th>Estado</th><th></th></tr></thead>
+    <tbody>
+      <% utilizadores.forEach(function(u) { %>
+        <tr class="<%= u.ativo ? '' : 'linha-inativa' %>">
+          <td><%= u.nome %></td>
+          <td><%= u.role %></td>
+          <td><%= u.ativo ? 'Ativo' : 'Inativo' %></td>
+          <td>
+            <form method="POST" action="/utilizadores/<%= u.id %>/reset-pin" class="form-inline">
+              <input type="password" inputmode="numeric" pattern="\d{4}" maxlength="4" name="pin" placeholder="Novo PIN" required>
+              <button type="submit">Repor PIN</button>
+            </form>
+            <form method="POST" action="/utilizadores/<%= u.id %>/<%= u.ativo ? 'inativar' : 'ativar' %>" class="form-inline">
+              <button type="submit"><%= u.ativo ? 'Inativar' : 'Reativar' %></button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h2>Novo utilizador</h2>
+  <form method="POST" action="/utilizadores" class="form-inline-grid">
+    <label for="nome">Nome</label>
+    <input type="text" name="nome" id="nome" required>
+    <label for="role">Role</label>
+    <select name="role" id="role">
+      <option value="motorista">Motorista</option>
+      <option value="responsavel">Responsavel</option>
+    </select>
+    <label for="pin">PIN (4 digitos)</label>
+    <input type="password" inputmode="numeric" pattern="\d{4}" maxlength="4" name="pin" id="pin" required>
+    <button type="submit">Criar</button>
+  </form>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,44 @@
+<%- include('partials/header', { titulo: 'Deposito' }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1>Deposito de combustivel</h1>
+  <p class="cartao-stock">Stock atual: <strong><%= stock.toFixed(1) %> L</strong> / <%= capacidadeTotal %> L</p>
+
+  <h2>Registar entrega</h2>
+  <form method="POST" action="/deposito/entrega" class="form-inline-grid">
+    <label for="litrosEntrega">Litros recebidos</label>
+    <input type="number" step="0.1" min="0.1" name="litros" id="litrosEntrega" required>
+    <label for="origem">Fornecedor</label>
+    <input type="text" name="origem" id="origem">
+    <label for="faturaReferencia">Referencia da fatura</label>
+    <input type="text" name="faturaReferencia" id="faturaReferencia">
+    <button type="submit">Registar entrega</button>
+  </form>
+
+  <h2>Ajuste de reconciliacao</h2>
+  <p class="ajuda">Usa isto quando medires o deposito fisicamente e o valor nao bater certo com o stock calculado. Litros pode ser negativo (para baixar o stock registado) ou positivo (para subir).</p>
+  <form method="POST" action="/deposito/ajuste" class="form-inline-grid">
+    <label for="litrosAjuste">Litros (+/-)</label>
+    <input type="number" step="0.1" name="litros" id="litrosAjuste" required>
+    <label for="observacoesAjuste">Motivo</label>
+    <input type="text" name="observacoes" id="observacoesAjuste">
+    <button type="submit">Registar ajuste</button>
+  </form>
+
+  <h2>Movimentos recentes</h2>
+  <table class="tabela">
+    <thead><tr><th>Data</th><th>Tipo</th><th>Litros</th><th>Origem/Motivo</th><th>Registado por</th></tr></thead>
+    <tbody>
+      <% movimentos.forEach(function(m) { %>
+        <tr>
+          <td><%= m.data_hora %></td>
+          <td><%= m.tipo %></td>
+          <td><%= m.litros %></td>
+          <td><%= m.origem || m.observacoes || '-' %><%= m.fatura_referencia ? ' (' + m.fatura_referencia + ')' : '' %></td>
+          <td><%= m.criado_por_nome %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</main>
+<%- include('partials/footer') %>

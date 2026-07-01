@@ -1,0 +1,11 @@
+<nav class="nav">
+  <span class="nav-utilizador"><%= utilizador.nome %></span>
+  <% if (utilizador.role === 'responsavel') { %>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/viaturas">Viaturas</a>
+    <a href="/deposito">Deposito</a>
+    <a href="/utilizadores">Utilizadores</a>
+  <% } %>
+  <a href="/abastecer">Abastecer</a>
+  <a href="/logout">Sair</a>
+</nav>

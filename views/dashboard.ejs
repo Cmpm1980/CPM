@@ -1,0 +1,46 @@
+<%- include('partials/header', { titulo: 'Dashboard' }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1>Dashboard</h1>
+  <p class="cartao-stock">Stock do deposito: <strong><%= stock.toFixed(1) %> L</strong> / <%= capacidadeTotal %> L</p>
+
+  <% if (alertas.length > 0) { %>
+    <h2>Alertas de consumo anomalo</h2>
+    <ul class="lista-alertas">
+      <% alertas.forEach(function(a) { %>
+        <li><%= a.matricula %>: ultimo abastecimento <%= a.l100km.toFixed(1) %> L/100km (media historica: <%= a.mediaHistorica.toFixed(1) %> L/100km)</li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <h2>Pendentes de revisao (<%= pendentes.length %>)</h2>
+  <% if (pendentes.length === 0) { %>
+    <p>Sem registos pendentes.</p>
+  <% } else { %>
+    <table class="tabela">
+      <thead><tr><th>Data</th><th>Viatura</th><th>Litros</th><th>Km</th><th>Quem</th><th>Modo</th><th>Origem</th><th></th></tr></thead>
+      <tbody>
+        <% pendentes.forEach(function(p) { %>
+          <tr class="<%= p.modo_acesso === 'motorista' ? 'linha-destaque' : '' %>">
+            <td><%= p.data_hora %></td>
+            <td><%= p.matricula %></td>
+            <td><%= p.litros %></td>
+            <td><%= p.km_odometro %></td>
+            <td><%= p.utilizador_nome %></td>
+            <td><%= p.modo_acesso %></td>
+            <td><%= p.origem_registo %></td>
+            <td>
+              <form method="POST" action="/pendentes/<%= p.id %>/rever" class="form-inline">
+                <button type="submit">Confirmar</button>
+              </form>
+              <form method="POST" action="/abastecimentos/<%= p.id %>/anular" class="form-inline">
+                <button type="submit">Anular</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</main>
+<%- include('partials/footer') %>

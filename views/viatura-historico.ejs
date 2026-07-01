@@ -1,0 +1,26 @@
+<%- include('partials/header', { titulo: 'Historico - ' + viatura.matricula }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1>Historico - <%= viatura.matricula %></h1>
+  <p><%= [viatura.marca, viatura.modelo].filter(Boolean).join(' ') %> - Km atual: <%= viatura.km_atual %></p>
+  <table class="tabela">
+    <thead>
+      <tr><th>Data</th><th>Litros</th><th>Km</th><th>L/100km</th><th>Quem</th><th>Modo</th><th>Origem</th><th>Revisto</th></tr>
+    </thead>
+    <tbody>
+      <% abastecimentos.forEach(function(a) { %>
+        <tr>
+          <td><%= a.data_hora %></td>
+          <td><%= a.litros %></td>
+          <td><%= a.km_odometro %></td>
+          <td><%= consumoPorId[a.id] ? consumoPorId[a.id].toFixed(1) : '-' %></td>
+          <td><%= a.utilizador_nome %></td>
+          <td><%= a.modo_acesso %></td>
+          <td><%= a.origem_registo %></td>
+          <td><%= a.revisto_por_responsavel ? 'Sim' : 'Nao' %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</main>
+<%- include('partials/footer') %>

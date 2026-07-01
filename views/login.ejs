@@ -1,0 +1,17 @@
+<%- include('partials/header', { titulo: 'Login - Gestao de Frota' }) %>
+<main class="login-page">
+  <h1>Gestao de Frota - CPM</h1>
+  <% if (erro) { %><p class="erro"><%= erro %></p><% } %>
+  <form method="POST" action="/login" class="login-form">
+    <label for="utilizadorId">Quem es tu?</label>
+    <select name="utilizadorId" id="utilizadorId" required>
+      <% utilizadores.forEach(function(u) { %>
+        <option value="<%= u.id %>"><%= u.nome %> <%= u.role === 'responsavel' ? '(Responsavel)' : '' %></option>
+      <% }) %>
+    </select>
+    <label for="pin">PIN (4 digitos)</label>
+    <input type="password" inputmode="numeric" pattern="\d{4}" maxlength="4" name="pin" id="pin" required autofocus>
+    <button type="submit">Entrar</button>
+  </form>
+</main>
+<%- include('partials/footer') %>

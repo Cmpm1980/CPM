@@ -1,0 +1,36 @@
+:root { font-family: system-ui, -apple-system, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f4f6f5; color: #1a1a1a; }
+main { max-width: 720px; margin: 0 auto; padding: 16px; }
+
+.nav { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; background: #1f6f43; padding: 10px 16px; }
+.nav a { color: #fff; text-decoration: none; font-weight: 600; padding: 8px 4px; }
+.nav-utilizador { color: #d7f0e1; margin-right: auto; font-weight: 600; }
+
+h1 { font-size: 1.4rem; }
+h2 { font-size: 1.1rem; margin-top: 28px; }
+
+form { display: flex; flex-direction: column; gap: 8px; max-width: 420px; }
+.form-inline-grid { display: grid; grid-template-columns: 1fr; gap: 6px; max-width: 480px; }
+.form-inline { display: inline-flex; gap: 4px; margin: 0 4px 0 0; }
+
+label { font-weight: 600; font-size: 0.9rem; }
+input, select, textarea { font-size: 1.1rem; padding: 10px; border: 1px solid #bbb; border-radius: 6px; }
+button, .botao { font-size: 1.1rem; padding: 12px; border: none; border-radius: 6px; background: #1f6f43; color: #fff; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
+button:active, .botao:active { background: #17532f; }
+
+.tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+.tabela th, .tabela td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+.linha-inativa { opacity: 0.5; }
+.linha-destaque { background: #fff6d6; }
+
+.cartao-stock { font-size: 1.2rem; background: #fff; padding: 14px; border-radius: 8px; border: 1px solid #ddd; }
+.erro { color: #b00020; font-weight: 600; }
+.contagem-pendentes { color: #a15c00; font-weight: 600; }
+#estado-abastecimento.estado-ok { color: #1f6f43; font-weight: 600; }
+#estado-abastecimento.estado-offline { color: #a15c00; font-weight: 600; }
+#estado-abastecimento.estado-erro { color: #b00020; font-weight: 600; }
+
+.login-page { text-align: center; padding-top: 40px; }
+.login-form { margin: 0 auto; text-align: left; }
+.lista-alertas { background: #fff0e0; padding: 12px 24px; border-radius: 8px; }

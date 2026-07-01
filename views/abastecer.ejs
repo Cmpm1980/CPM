@@ -1,0 +1,36 @@
+<%- include('partials/header', { titulo: 'Abastecer - Gestao de Frota' }) %>
+<% if (deviceToken) { %>
+<script>window.DEVICE_TOKEN = "<%= deviceToken %>";</script>
+<% } %>
+<%- include('partials/nav') %>
+<main class="abastecer-page">
+  <h1>Registar abastecimento</h1>
+  <p id="contagem-pendentes" class="contagem-pendentes"></p>
+
+  <form id="form-abastecer" class="form-abastecer">
+    <label for="viaturaId">Viatura</label>
+    <select name="viaturaId" id="viaturaId" required>
+      <% viaturas.forEach(function(v) { %>
+        <option value="<%= v.id %>">
+          <%= v.matricula %><%= v.marca ? ' - ' + v.marca : '' %><%= v.modelo ? ' ' + v.modelo : '' %>
+          (km atual: <%= v.km_atual %>)
+        </option>
+      <% }) %>
+    </select>
+
+    <label for="litros">Litros</label>
+    <input type="number" step="0.1" min="0.1" name="litros" id="litros" required inputmode="decimal">
+
+    <label for="kmOdometro">Km no odometro</label>
+    <input type="number" step="1" min="0" name="kmOdometro" id="kmOdometro" required inputmode="numeric">
+
+    <label for="observacoes">Observacoes (opcional)</label>
+    <textarea name="observacoes" id="observacoes" rows="2"></textarea>
+
+    <button type="submit">Registar abastecimento</button>
+  </form>
+
+  <p id="estado-abastecimento"></p>
+</main>
+<script src="/offline-queue.js"></script>
+<%- include('partials/footer') %>

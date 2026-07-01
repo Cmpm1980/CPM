@@ -1,0 +1,31 @@
+<%- include('partials/header', { titulo: viatura ? 'Editar viatura' : 'Nova viatura' }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1><%= viatura ? 'Editar viatura' : 'Nova viatura' %></h1>
+  <% if (erro) { %><p class="erro"><%= erro %></p><% } %>
+  <form method="POST" action="<%= viatura && viatura.id ? '/viaturas/' + viatura.id : '/viaturas' %>" class="form-viatura">
+    <label for="matricula">Matricula</label>
+    <input type="text" name="matricula" id="matricula" required value="<%= viatura ? viatura.matricula || '' : '' %>">
+
+    <label for="marca">Marca</label>
+    <input type="text" name="marca" id="marca" value="<%= viatura ? viatura.marca || '' : '' %>">
+
+    <label for="modelo">Modelo</label>
+    <input type="text" name="modelo" id="modelo" value="<%= viatura ? viatura.modelo || '' : '' %>">
+
+    <label for="capacidadeDepositoLitros">Capacidade do deposito (L)</label>
+    <input type="number" step="0.1" name="capacidadeDepositoLitros" id="capacidadeDepositoLitros" value="<%= viatura ? viatura.capacidade_deposito_litros || '' : '' %>">
+
+    <label for="kmAtual">Km atual</label>
+    <input type="number" step="1" name="kmAtual" id="kmAtual" value="<%= viatura ? viatura.km_atual || 0 : 0 %>">
+
+    <label for="departamento">Departamento / Obra</label>
+    <input type="text" name="departamento" id="departamento" value="<%= viatura ? viatura.departamento || '' : '' %>">
+
+    <label for="observacoes">Observacoes</label>
+    <textarea name="observacoes" id="observacoes" rows="2"><%= viatura ? viatura.observacoes || '' : '' %></textarea>
+
+    <button type="submit">Guardar</button>
+  </form>
+</main>
+<%- include('partials/footer') %>

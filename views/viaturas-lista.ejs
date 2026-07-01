@@ -1,0 +1,29 @@
+<%- include('partials/header', { titulo: 'Viaturas' }) %>
+<%- include('partials/nav') %>
+<main>
+  <h1>Viaturas</h1>
+  <a href="/viaturas/novo" class="botao">+ Nova viatura</a>
+  <table class="tabela">
+    <thead>
+      <tr><th>Matricula</th><th>Marca/Modelo</th><th>Km atual</th><th>Departamento</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% viaturas.forEach(function(v) { %>
+        <tr class="<%= v.ativo ? '' : 'linha-inativa' %>">
+          <td><a href="/viaturas/<%= v.id %>/historico"><%= v.matricula %></a></td>
+          <td><%= [v.marca, v.modelo].filter(Boolean).join(' ') %></td>
+          <td><%= v.km_atual %></td>
+          <td><%= v.departamento || '-' %></td>
+          <td><%= v.ativo ? 'Ativa' : 'Inativa' %></td>
+          <td>
+            <a href="/viaturas/<%= v.id %>/editar">Editar</a>
+            <form method="POST" action="/viaturas/<%= v.id %>/<%= v.ativo ? 'inativar' : 'ativar' %>" class="form-inline">
+              <button type="submit"><%= v.ativo ? 'Inativar' : 'Reativar' %></button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</main>
+<%- include('partials/footer') %>
