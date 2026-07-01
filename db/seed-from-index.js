@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const client = require('./turso-client');
 
-const INDEX_PATH = path.join(__dirname, '..', '..', 'Doc_Viaturas', 'Index-viaturas.md');
+// Uso: node db/seed-from-index.js "C:\caminho\para\Index-viaturas.md"
+// Migracao one-off ja executada contra a BD de producao - o caminho e passado
+// explicitamente para nao acoplar este projeto a localizacao dos documentos de negocio.
+const INDEX_PATH = process.argv[2];
 
 function parseLinha(linha) {
   const matriculaMatch = linha.match(/\d{2}[-\s][A-Z]{2}[-\s]\d{2}|\d{2}[-\s]\d{2}[-\s][A-Z]{2}/i);
@@ -13,6 +16,11 @@ function parseLinha(linha) {
 }
 
 async function seed() {
+  if (!INDEX_PATH) {
+    console.error('Uso: node db/seed-from-index.js "C:\\caminho\\para\\Index-viaturas.md"');
+    process.exit(1);
+  }
+
   const existentes = await client.execute('SELECT COUNT(*) AS n FROM viaturas');
   if (existentes.rows[0].n > 0) {
     console.log(`Ja existem ${existentes.rows[0].n} viatura(s) na base de dados - seed cancelado para nao duplicar. Usa o ecra de Viaturas para adicionar as restantes.`);
